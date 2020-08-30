@@ -1,35 +1,46 @@
-eileFormatVersion: 2
-guid: 6f794fe023559e0499529d987c38f995
+fileFormatVersion: 2
+guid: 39ed35068e155dd498a0a0cc3bcba335
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: finger l
-    100002: finger l_end
-    100004: finger r
-    100006: finger r_end
-    100008: //RootNode
-    100010: hand l
-    100012: hand r
-    100014: lowarm l
-    100016: lowarm r
-    100018: root
-    100020: uparm l
-    100022: uparm r
-    400000: finger l
-    400002: finger l_end
-    400004: finger r
-    400006: finger r_end
-    400008: //RootNode
-    400010: hand l
-    400012: hand r
-    400014: lowarm l
-    400016: lowarm r
-    400018: root
-    400020: uparm l
-    400022: uparm r
-    7400000: fps arms|fps armsAction
+    100000: Camera
+    100002: finger l
+    100004: finger l_end
+    100006: finger l_end_end
+    100008: finger r
+    100010: finger r_end
+    100012: finger r_end_end
+    100014: fps arms
+    100016: //RootNode
+    100018: hand l
+    100020: hand r
+    100022: Light
+    100024: lowarm l
+    100026: lowarm r
+    100028: root
+    100030: uparm l
+    100032: uparm r
+    400000: Camera
+    400002: finger l
+    400004: finger l_end
+    400006: finger l_end_end
+    400008: finger r
+    400010: finger r_end
+    400012: finger r_end_end
+    400014: fps arms
+    400016: //RootNode
+    400018: hand l
+    400020: hand r
+    400022: Light
+    400024: lowarm l
+    400026: lowarm r
+    400028: root
+    400030: uparm l
+    400032: uparm r
+    2000000: Camera
+    7400000: fps arms|fps arms|fps arms|walk_egghttps://scontent-frt3-1.xx.fbcdn.net/
     9500000: //RootNode
-    2186277476908879412: ImportLogs
+    10800000: Light
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -57,7 +68,35 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: fps arms|fps arms|fps arms|walk_egghttps://scontent-frt3-1.xx.fbcdn.net/
+      takeName: fps arms|fps arms|fps arms|walk_egghttps://scontent-frt3-1.xx.fbcdn.net/
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -82,7 +121,7 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
+    previousCalculatedGlobalScale: 0.01
     hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
@@ -93,7 +132,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   importAnimation: 1
-  copyAvatar: 0
+  copyAvatar: 1
   humanDescription:
     serializedVersion: 2
     human: []
@@ -109,7 +148,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: b5363254e8c298b4d872a36b73c5ca7d,
+    type: 3}
   animationType: 2
   humanoidOversampling: 1
   additionalBone: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {
-    public WeaponProperties weaponProperties { private set; get; } = new WeaponProperties(2.0f, 1.0f, 0.5f, 5.0f, 1.0f, 2.0f, 10.0f);
+    public WeaponProperties weaponProperties;
 
     public GameObject barrelEnd;
 
@@ -12,20 +12,26 @@ public class WeaponScript : MonoBehaviour
     private float drawTime = 0f;
     private float shotTime = 0f;
     private float magazineAmmo = 0f;
-    private float ammo = 0f;
+    private float ammo = 100f;
+
+    private Vector3 prevPos;
+    private Vector3 velocity;
 
     [SerializeField]
-    private GameObject waterBoltPrefab;
+    private GameObject waterProjectilePrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        prevPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        velocity = (transform.position - prevPos) / Time.deltaTime;
+        prevPos = transform.position;
+
         if (shotTime >= 0)
         {
             shotTime -= Time.deltaTime;
@@ -50,7 +56,23 @@ public class WeaponScript : MonoBehaviour
     {
         if (shotTime < 0 && reloadTime < 0 && drawTime < 0 && magazineAmmo > 0 && barrelEnd != null)
         {
-            Instantiate(waterBoltPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
+            float u, v, S;
+
+            do
+            {
+                u = 2.0f * UnityEngine.Random.value - 1.0f;
+                v = 2.0f * UnityEngine.Random.value - 1.0f;
+                S = u * u + v * v;
+            }
+            while (S >= 1.0f);
+
+            // standard normal distribution
+            float std = u * Mathf.Sqrt(-2.0f * Mathf.Log(S) / S);
+
+            GameObject projectile = Instantiate(waterProjectilePrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
+            projectile.GetComponent<Rigidbody>().velocity = projectile.transform.forward * weaponProperties.projectileSpeed + velocity;
+            projectile.GetComponent<WaterProjectileScript>().damage = weaponProperties.damageAvg + std * weaponProperties.damageStdDev;
+
             shotTime = weaponProperties.rateOfFire;
             magazineAmmo -= weaponProperties.ammoUsage;
         }

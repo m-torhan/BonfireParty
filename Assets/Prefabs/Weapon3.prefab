@@ -45,14 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponProperties:
-    drawTime: 2
-    reloadTime: 1
-    rateOfFire: 0.5
-    damageAvg: 5
-    damageStdDev: 1
-    ammoUsage: 2
-    magazineSize: 10
-    projectileSpeed: 0
+    drawTime: 4
+    reloadTime: 3
+    rateOfFire: 0.1
+    damageAvg: 1
+    damageStdDev: 0.1
+    ammoUsage: 0.5
+    magazineSize: 20
+    projectileSpeed: 50
   barrelEnd: {fileID: 5327800468045490063}
   waterProjectilePrefab: {fileID: 7364533045537848098, guid: 1266e3b2e3d049e45baf87a06022ef9b,
     type: 3}

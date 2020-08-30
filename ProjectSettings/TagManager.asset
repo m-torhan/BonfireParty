@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: [Water, WaterProjectile, Ground, Puddle, Container]
+  tags:
+  - Water
+  - WaterProjectile
+  - Ground
+  - Puddle
+  - Container
+  - Pond
   layers:
   - Default
   - TransparentFX
@@ -16,7 +22,6 @@ TagManager:
   - PostProcessing
   - Ground
   - player
-  - 
   - 
   - 
   - 

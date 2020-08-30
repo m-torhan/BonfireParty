@@ -29,7 +29,7 @@ public class WeaponContainerScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ground"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             stop = true;
         }

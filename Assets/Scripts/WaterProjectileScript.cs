@@ -31,12 +31,12 @@ public class WaterProjectileScript : MonoBehaviour
         {
             other.GetComponent<PuddleScript>().AddWater(size * size * size);
         }
-        if (other.gameObject.CompareTag("Ground"))
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Destroy(gameObject);
             RaycastHit hit;
             other.Raycast(new Ray(transform.position, transform.forward), out hit, 10);
-            GameObject puddle = Instantiate(puddlePrefab, new Vector3(hit.point.x, 0.02f, hit.point.z), Quaternion.identity);
+            GameObject puddle = Instantiate(puddlePrefab, new Vector3(hit.point.x, hit.point.y, hit.point.z), Quaternion.identity);
             puddle.GetComponent<PuddleScript>().volume = size * size * size;
         }
     }

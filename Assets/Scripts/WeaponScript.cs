@@ -12,7 +12,6 @@ public class WeaponScript : MonoBehaviour
     private float drawTime = 0f;
     private float shotTime = 0f;
     private float magazineAmmo = 0f;
-    private float ammo = 100f;
 
     private Vector3 prevPos;
     private Vector3 velocity;
@@ -20,10 +19,13 @@ public class WeaponScript : MonoBehaviour
     [SerializeField]
     private GameObject waterProjectilePrefab;
 
+    private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
         prevPos = transform.position;
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class WeaponScript : MonoBehaviour
             reloadTime -= Time.deltaTime;
             if (reloadTime < 0)
             {
-                magazineAmmo = ammo >= weaponProperties.magazineSize ? weaponProperties.magazineSize : ammo;
+                magazineAmmo = player.GetComponent<PlayerMovement>().PutAmmoToWeapon(weaponProperties.magazineSize);
             }
         }
     }

@@ -35,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject weapon;
 
+    private bool inPond = false;
+    private float ammo = 50.0f;
+    public float maxAmmo = 200.0f;
     
     [SerializeField]
     private GameObject[] weaponSlots = new GameObject[3];
@@ -122,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // reload
-        if (Input.GetKeyDown(KeyCode.R) && weapon != null)
+        if (Input.GetKeyDown(KeyCode.R) && weapon != null && ammo > 0)
         {
             weapon.GetComponent<WeaponScript>().Reload();
         }
@@ -131,6 +134,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && weapon != null)
         {
             DiscardWeapon();
+        }
+
+        // get ammo
+        if (Input.GetKey(KeyCode.E) && weapon != null)
+        {
+            LoadAmmo();
         }
 
         // weapon switch
@@ -215,5 +224,32 @@ public class PlayerMovement : MonoBehaviour
             PickUpWeapon(other.gameObject.GetComponent<WeaponContainerScript>().weapon);
             Destroy(other.gameObject);
         }
+        else if (other.CompareTag("Pond"))
+        {
+            inPond = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Pond"))
+        {
+            inPond = false;
+        }
+    }
+
+    void LoadAmmo()
+    {
+        if (inPond && ammo < maxAmmo)
+        {
+            ammo += Time.deltaTime * 10.0f;
+        }
+    }
+
+    public float PutAmmoToWeapon(float amount)
+    {
+        float ret = ammo >= amount ? amount : ammo;
+        ammo -= ret;
+        return ret;
     }
 }

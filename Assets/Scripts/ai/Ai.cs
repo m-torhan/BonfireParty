@@ -3,7 +3,7 @@
 public static class Ai 
 {
 
-    public const int playerLayerMask = 1 << 9;
+    public const int playerLayerMask = 1 << 10;
 
     public static bool IsInLineOfSight(Vector3 eyePos, Vector3 target)
     {

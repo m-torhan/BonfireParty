@@ -38,12 +38,12 @@ public class Projectile : MonoBehaviour
         t += speed * Time.deltaTime;
         if (Physics.CheckSphere(transform.position, sphereCollider.radius))
         {
-            Debug.Log("Projectile bum (wczesniejsza kolizja)");
+            //Debug.Log("Projectile bum (wczesniejsza kolizja)");
             Destroy(gameObject);
         }
         if (t >= 1.0f)
         {
-            Debug.Log("Projectile samozniszenie (niczego nie trafil)");
+            //Debug.Log("Projectile samozniszenie (niczego nie trafil)");
             Destroy(gameObject);
         }
     }

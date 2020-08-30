@@ -177,7 +177,6 @@ public class RangedEnemyAi : MonoBehaviour
         if (agent.remainingDistance < 0.5f)
         {
             state = RangedEnemyState.Chasing;
-            Debug.Log("Wracam do gonienia");
         }
     }
 

@@ -150,7 +150,7 @@ public class MeleeEnemyAi : MonoBehaviour
         if (agent.remainingDistance < explostionTriggerRange)
         {
             // Animacja eksplozji trwajaca chwile, po tym czasie zadaj obrazenia wszystkim trafionym
-            Debug.Log("BUM");
+            //Debug.Log("BUM");
             Destroy(gameObject);
         }
         

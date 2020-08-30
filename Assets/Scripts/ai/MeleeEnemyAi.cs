@@ -3,11 +3,12 @@ using UnityEngine.AI;
 
 public enum MeleeEnemyState
 {
-    Patroling,
+    Patrolling,
     Chasing,
-    Charging
+    Charge
 }
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class MeleeEnemyAi : MonoBehaviour
 {
     [SerializeField]
@@ -15,26 +16,26 @@ public class MeleeEnemyAi : MonoBehaviour
     private int patrolDestination = 0;
 
     [SerializeField, Range(1.0f, 100.0f)]
-    private float hearingRadius = 10.0f;  // from how far away enemy starts chasing player
+    private float hearingRadius = 30.0f;  // from how far away enemy starts chasing player
 
     [SerializeField, Range(1.0f, 5f)]
     private float speedWhileChasingMultiplayer = 2.0f;  // how fast enemy starts running while chasing player
     private bool speedChanged = false;
 
     [SerializeField, Range(1.0f, 35.0f)]
-    private float chargingDistance = 5.0f;  // how close enemy needs to be to start charging at player, certenly this number should be smaller than hearing Radius
+    private float chargingDistance = 10.0f;  // how close enemy needs to be to start charging at player, certenly this number should be smaller than hearing Radius
 
     [SerializeField, Range(0.0f, 3.0f)]
-    private float explostionTriggerRange = 0.5f;  // how close will enemy charge toi player before explosion
+    private float explostionTriggerRange = 1.5f;  // how close will enemy charge toi player before explosion
 
     //[SerializeField, Range(1.0f, 5.0f)]
     //private float explostionRange = 3.0f;  // explosion radius, should be bigger than explosionTriggerRange
 
-    private int playerLayerMask = 1 << 9;
+    private const int playerLayerMask = 1 << 9;
 
-    bool enemyInLineOfSight = false; // this is only updated in chasing state, it is member variable only to use is to draw gizmos for visualization
+    bool playerInLineOfSight = false; // this is only updated in chasing state, it is member variable only to use is to draw gizmos for visualization
     private Vector3? explostionPosition = null;
-    private MeleeEnemyState state = MeleeEnemyState.Patroling;
+    private MeleeEnemyState state = MeleeEnemyState.Patrolling;
     private NavMeshAgent agent;
     private Transform player;
 
@@ -48,7 +49,7 @@ public class MeleeEnemyAi : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(state == MeleeEnemyState.Patroling)
+        if(state == MeleeEnemyState.Patrolling)
             Gizmos.DrawWireSphere(transform.position, hearingRadius);
         if (state == MeleeEnemyState.Chasing)
         {
@@ -63,13 +64,13 @@ public class MeleeEnemyAi : MonoBehaviour
                 Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
             }
             
-            if (enemyInLineOfSight)
+            if (playerInLineOfSight)
                 Gizmos.color = Color.green;
             else
                 Gizmos.color = Color.red;
             Gizmos.DrawLine(eyePos, player.position);
         }
-        else if(state == MeleeEnemyState.Charging)
+        else if(state == MeleeEnemyState.Charge)
         {
             Gizmos.color = Color.yellow;
             Vector3 pos = transform.position;
@@ -81,11 +82,11 @@ public class MeleeEnemyAi : MonoBehaviour
 
     private void Update()
     {
-        if (state == MeleeEnemyState.Patroling)
+        if (state == MeleeEnemyState.Patrolling)
             UpdatePatrolling();
         else if (state == MeleeEnemyState.Chasing)
             UpdateChasing();
-        else if (state == MeleeEnemyState.Charging)
+        else if (state == MeleeEnemyState.Charge)
             UpdateCharging();
     }
 
@@ -126,7 +127,7 @@ public class MeleeEnemyAi : MonoBehaviour
 
         agent.destination = player.position;
 
-        enemyInLineOfSight = false;
+        playerInLineOfSight = false;
         RaycastHit hitInfo;
 
         eyePos = transform.position;
@@ -136,16 +137,16 @@ public class MeleeEnemyAi : MonoBehaviour
         if (Physics.Raycast(ray, out hitInfo))
         {
             if (hitInfo.transform.position == player.position)
-                enemyInLineOfSight = true;
+                playerInLineOfSight = true;
         }
 
 
-        if (enemyInLineOfSight && agent.remainingDistance < chargingDistance)
+        if (playerInLineOfSight && agent.remainingDistance < chargingDistance)
         {
             // TODO: skomplikować movement troche bardziej
             // jeżeli jesteśmy odpowiednio blisko, ale nie w line of sight to mozna sprawdzic dodatkowo
             //  czy jeżeli przesuniemy się trochę w prawo / lewo to czy będzie line of sight 
-            state = MeleeEnemyState.Charging;
+            state = MeleeEnemyState.Charge;
         }
     }
 

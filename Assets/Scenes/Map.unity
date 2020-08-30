@@ -315,18 +315,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 115112922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dac58bd59df92f43ac0da79e3dccab2, type: 3}
+  m_Script: {fileID: 11500000, guid: 87f79cc00dc2c1845b8707dbbd62a092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   partolPoints:
   - {fileID: 100827411}
   - {fileID: 702813393}
   - {fileID: 66143585}
-  hearingRadius: 20
-  speedWhileChasingMultiplayer: 2
-  chargingRadius: 9
-  explostionTriggerRange: 0.5
-  explostionRange: 3
+  hearingRadius: 30
+  castDistance: 20
+  castTime: 1
+  projectilePrefab: {fileID: 1944458761958907760, guid: 7c57b2f6db705734f9c307008ab6c04e,
+    type: 3}
+  rechargeTime: 3
 --- !u!1 &149085228
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +685,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489673155}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 101.09, y: -17.52, z: -11.41}
+  m_LocalPosition: {x: 105.67, y: -17.98, z: -0.67}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7295,10 +7296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40aa55490a987e24e8b3c87182594e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
-  - {fileID: 100827411}
-  - {fileID: 702813393}
-  - {fileID: 66143585}
 --- !u!1001 &900167840
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8182,11 +8179,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2125928743, guid: 63999a836d7b2f440833a2de6a77dec0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -20.37
+      value: -17.6
       objectReference: {fileID: 0}
     - target: {fileID: 2125928743, guid: 63999a836d7b2f440833a2de6a77dec0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.3
+      value: -36.8
       objectReference: {fileID: 0}
     - target: {fileID: 2125928743, guid: 63999a836d7b2f440833a2de6a77dec0, type: 3}
       propertyPath: m_LocalRotation.x

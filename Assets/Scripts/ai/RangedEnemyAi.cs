@@ -121,7 +121,7 @@ public class RangedEnemyAi : MonoBehaviour
     {
         if (partolPoints.Length == 0)
         {
-            Debug.Log("Patrol points are not set up for " + gameObject.name);
+            Debug.LogError("Patrol points are not set up for " + gameObject.name);
             return;
         }
 
@@ -153,9 +153,33 @@ public class RangedEnemyAi : MonoBehaviour
 
     private void Fire()
     {
-        Projectile p = Instantiate(projectilePrefab);
-        p.Setup(eyePos, player.position, 0.1f);
+        int random = Random.Range(0, 3);
+        switch (random)
+        {
+            case 0:
+                FireProjectile(eyePos, player.position, 0.25f);
+                break;
+            case 1:
+                FireProjectile(eyePos, player.position, 0.18f);
+                FireProjectile(eyePos, player.position + transform.right * 2f, 0.15f);
+                FireProjectile(eyePos, player.position - transform.right * 2f, 0.15f);
+                break;
+            case 2:
+                FireProjectile(eyePos, player.position, 0.1f);
+                FireProjectile(eyePos, player.position + transform.right * 1.5f, 0.1f);
+                FireProjectile(eyePos, player.position - transform.right * 1.5f, 0.1f);
+                FireProjectile(eyePos, player.position + transform.right * 3f, 0.1f);
+                FireProjectile(eyePos, player.position - transform.right * 3f, 0.1f);
+                break;
+        }
+
         state = RangedEnemyState.Recharging;
+    }
+
+    private void FireProjectile(Vector3 startingPos, Vector3 destination, float speed)
+    {
+        Projectile p = Instantiate(projectilePrefab);
+        p.Setup(startingPos, destination, speed);
     }
 
     private void UpdateCasting()

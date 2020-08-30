@@ -57,14 +57,11 @@ public class MeleeEnemyAi : MonoBehaviour
                 Gizmos.color = Color.green;
             else
                 Gizmos.color = Color.red;
-            
 
             for (int i = 0; i < agent.path.corners.Length - 1; i++)
             {
                 Gizmos.DrawLine(agent.path.corners[i], agent.path.corners[i + 1]);
             }
-            //Gizmos.DrawWireSphere(transform.position, chargingDistance);
-            
             
             if (enemyInLineOfSight)
                 Gizmos.color = Color.green;
@@ -84,70 +81,29 @@ public class MeleeEnemyAi : MonoBehaviour
 
     private void Update()
     {
-        if(state == MeleeEnemyState.Patroling)
-        {
-            if (Physics.CheckSphere(transform.position, hearingRadius, playerLayerMask))
-            {
-                state = MeleeEnemyState.Chasing;
-                Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRadius, playerLayerMask);
-                Debug.Assert(colliders.Length == 1, "Collider count doesn't match. Either there is more than one player or there is none.");
-                player = colliders[0].gameObject.transform;
-
-            }
-
-            if (!agent.pathPending && agent.remainingDistance < 0.5f)
-                PatrolNextPoint();
-        } 
-        else if(state == MeleeEnemyState.Chasing)
-        {
-            if (!speedChanged)
-            {
-                agent.speed *= speedWhileChasingMultiplayer;
-                speedChanged = true;
-            }
-
-            agent.destination = player.position;
-      
-            enemyInLineOfSight = false;
-            RaycastHit hitInfo;
-
-            eyePos = transform.position;
-            eyePos.y += 2.0f;
-
-            Ray ray = new Ray(eyePos, player.position - eyePos);
-            if(Physics.Raycast(ray, out hitInfo))
-            {
-                if (hitInfo.transform.position == player.position)
-                    enemyInLineOfSight = true;
-            }
-
-
-            if (enemyInLineOfSight && agent.remainingDistance < chargingDistance)
-            {
-                // TODO: skomplikować movement troche bardziej
-                // jeżeli jesteśmy odpowiednio blisko, ale nie w line of sight to mozna sprawdzic dodatkowo
-                //  czy jeżeli przesuniemy się trochę w prawo / lewo to czy będzie line of sight 
-                state = MeleeEnemyState.Charging;
-            }          
-        }
-        else if(state == MeleeEnemyState.Charging)
-        {
-            // TODO: zostawia trail za soba podczas szarży?
-            if(explostionPosition == null)
-            {
-                explostionPosition = player.position;
-                agent.destination = (Vector3)explostionPosition;
-            }
-
-            if (agent.remainingDistance < explostionTriggerRange)
-            {
-                // Animacja eksplozji trwajaca chwile, po tym czasie zadaj obrazenia wszystkim trafionym
-                Debug.Log("BUM");
-                Destroy(gameObject);
-            }
-        }
+        if (state == MeleeEnemyState.Patroling)
+            UpdatePatrolling();
+        else if (state == MeleeEnemyState.Chasing)
+            UpdateChasing();
+        else if (state == MeleeEnemyState.Charging)
+            UpdateCharging();
     }
 
+
+    private void UpdatePatrolling()
+    {
+        if (Physics.CheckSphere(transform.position, hearingRadius, playerLayerMask))
+        {
+            state = MeleeEnemyState.Chasing;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRadius, playerLayerMask);
+            Debug.Assert(colliders.Length == 1, "Collider count doesn't match. Either there is more than one player or there is none.");
+            player = colliders[0].gameObject.transform;
+
+        }
+
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            PatrolNextPoint();
+    }
     private void PatrolNextPoint()
     {
         if (partolPoints.Length == 0)
@@ -158,5 +114,56 @@ public class MeleeEnemyAi : MonoBehaviour
 
         agent.destination = partolPoints[patrolDestination].position;
         patrolDestination = (patrolDestination + 1) % partolPoints.Length;
+    }
+
+    private void UpdateChasing()
+    {
+        if (!speedChanged)
+        {
+            agent.speed *= speedWhileChasingMultiplayer;
+            speedChanged = true;
+        }
+
+        agent.destination = player.position;
+
+        enemyInLineOfSight = false;
+        RaycastHit hitInfo;
+
+        eyePos = transform.position;
+        eyePos.y += 2.0f;
+
+        Ray ray = new Ray(eyePos, player.position - eyePos);
+        if (Physics.Raycast(ray, out hitInfo))
+        {
+            if (hitInfo.transform.position == player.position)
+                enemyInLineOfSight = true;
+        }
+
+
+        if (enemyInLineOfSight && agent.remainingDistance < chargingDistance)
+        {
+            // TODO: skomplikować movement troche bardziej
+            // jeżeli jesteśmy odpowiednio blisko, ale nie w line of sight to mozna sprawdzic dodatkowo
+            //  czy jeżeli przesuniemy się trochę w prawo / lewo to czy będzie line of sight 
+            state = MeleeEnemyState.Charging;
+        }
+    }
+
+    private void UpdateCharging()
+    {
+        // TODO: zostawia trail za soba podczas szarży?
+        if (explostionPosition == null)
+        {
+            explostionPosition = player.position;
+            agent.destination = (Vector3)explostionPosition;
+        }
+
+        if (agent.remainingDistance < explostionTriggerRange)
+        {
+            // Animacja eksplozji trwajaca chwile, po tym czasie zadaj obrazenia wszystkim trafionym
+            Debug.Log("BUM");
+            Destroy(gameObject);
+        }
+        
     }
 }

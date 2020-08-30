@@ -6,6 +6,7 @@ using UnityEngine.SocialPlatforms;
 public enum RangedEnemyState
 {
     Patrolling,
+    MovingTo,
     Chasing,
     Casting,
     Firing,
@@ -41,7 +42,6 @@ public class RangedEnemyAi : MonoBehaviour
 
 
     private RangedEnemyState state;
-    private const int playerLayerMask = 1 << 9;
     private NavMeshAgent agent;
     private Transform player;
     private bool isCasting = false;
@@ -89,6 +89,10 @@ public class RangedEnemyAi : MonoBehaviour
         {
             UpdateChasing();
         }
+        else if (state == RangedEnemyState.MovingTo)
+        {
+            UpdateMovingTo();
+        }
         else if(state == RangedEnemyState.Casting)
         {
             UpdateCasting();
@@ -105,10 +109,10 @@ public class RangedEnemyAi : MonoBehaviour
 
     private void UpdatePatrolling()
     {
-        if (Physics.CheckSphere(transform.position, hearingRadius, playerLayerMask))
+        if (Physics.CheckSphere(transform.position, hearingRadius, Ai.playerLayerMask))
         {
             state = RangedEnemyState.Chasing;
-            Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRadius, playerLayerMask);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRadius, Ai.playerLayerMask);
             Debug.Assert(colliders.Length == 1, "Collider count doesn't match. Either there is more than one player or there is none.");
             player = colliders[0].gameObject.transform;
 
@@ -133,21 +137,47 @@ public class RangedEnemyAi : MonoBehaviour
     {
         agent.destination = player.position;
 
-        playerInLineOfSight = false;
-        RaycastHit hitInfo;
-
         eyePos = transform.position;
         eyePos.y += 2.0f;
+        float currentDistance = Vector3.Distance(eyePos, player.position);
+        if (currentDistance < castDistance)
+        {
+            playerInLineOfSight = Ai.IsInLineOfSight(eyePos, player.position);
+            if (playerInLineOfSight)
+                state = RangedEnemyState.Casting;
+            else
+            {
+                for (int i = -8; i <= 8; i++)
+                {
+                    float newDistance = Vector3.Distance(eyePos + transform.right * (float)i, player.position);
+                    if (Ai.IsInLineOfSight(eyePos + transform.right * (float)i, player.position) &&  newDistance > currentDistance && newDistance + 3f < castDistance)
+                    {
+                        state = RangedEnemyState.MovingTo;
+                        agent.destination = eyePos + transform.right * (float)i;
+                    }
+                }
 
-        Ray ray = new Ray(eyePos, player.position - eyePos);
-        if (Physics.Raycast(ray, out hitInfo))
-        {
-            if (hitInfo.transform.position == player.position)
-                playerInLineOfSight = true;
+                for (int i = -8; i <= 8; i++)
+                {
+                    float newDistance = Vector3.Distance(eyePos + transform.forward * (float)i, player.position);
+                    if (Ai.IsInLineOfSight(eyePos + transform.forward * (float)i, player.position) && newDistance > currentDistance && newDistance + 3f < castDistance)
+                    {
+                        state = RangedEnemyState.MovingTo;
+                        agent.destination = eyePos + transform.right * (float)i;
+
+                    }
+                }
+            }
         }
-        if (playerInLineOfSight && Vector3.Distance(eyePos, player.position) < castDistance)
+    }
+
+    private void UpdateMovingTo()
+    {
+        // moving to traget has to be identified earlier
+        if (agent.remainingDistance < 0.5f)
         {
-            state = RangedEnemyState.Casting;
+            state = RangedEnemyState.Chasing;
+            Debug.Log("Wracam do gonienia");
         }
     }
 

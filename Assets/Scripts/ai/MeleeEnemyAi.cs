@@ -31,8 +31,6 @@ public class MeleeEnemyAi : MonoBehaviour
     //[SerializeField, Range(1.0f, 5.0f)]
     //private float explostionRange = 3.0f;  // explosion radius, should be bigger than explosionTriggerRange
 
-    private const int playerLayerMask = 1 << 9;
-
     bool playerInLineOfSight = false; // this is only updated in chasing state, it is member variable only to use is to draw gizmos for visualization
     private Vector3? explostionPosition = null;
     private MeleeEnemyState state = MeleeEnemyState.Patrolling;
@@ -93,10 +91,10 @@ public class MeleeEnemyAi : MonoBehaviour
 
     private void UpdatePatrolling()
     {
-        if (Physics.CheckSphere(transform.position, hearingRadius, playerLayerMask))
+        if (Physics.CheckSphere(transform.position, hearingRadius, Ai.playerLayerMask))
         {
             state = MeleeEnemyState.Chasing;
-            Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRadius, playerLayerMask);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRadius, Ai.playerLayerMask);
             Debug.Assert(colliders.Length == 1, "Collider count doesn't match. Either there is more than one player or there is none.");
             player = colliders[0].gameObject.transform;
 
@@ -127,19 +125,9 @@ public class MeleeEnemyAi : MonoBehaviour
 
         agent.destination = player.position;
 
-        playerInLineOfSight = false;
-        RaycastHit hitInfo;
-
         eyePos = transform.position;
         eyePos.y += 2.0f;
-
-        Ray ray = new Ray(eyePos, player.position - eyePos);
-        if (Physics.Raycast(ray, out hitInfo))
-        {
-            if (hitInfo.transform.position == player.position)
-                playerInLineOfSight = true;
-        }
-
+        playerInLineOfSight = Ai.IsInLineOfSight(eyePos, player.position);
 
         if (playerInLineOfSight && agent.remainingDistance < chargingDistance)
         {

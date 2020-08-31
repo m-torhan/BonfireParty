@@ -36,7 +36,8 @@ public class WaterProjectileScript : MonoBehaviour
             Destroy(gameObject);
             RaycastHit hit;
             other.Raycast(new Ray(transform.position, transform.forward), out hit, 10);
-            GameObject puddle = Instantiate(puddlePrefab, new Vector3(hit.point.x, hit.point.y, hit.point.z), Quaternion.identity);
+            Quaternion quat = Quaternion.LookRotation(hit.normal) * Quaternion.Euler(new Vector3(90, 0, 0));
+            GameObject puddle = Instantiate(puddlePrefab, new Vector3(hit.point.x, hit.point.y, hit.point.z) - (hit.normal.normalized*0.4f), quat);
             puddle.GetComponent<PuddleScript>().volume = size * size * size;
         }
         else if (other.gameObject.CompareTag("EnemyMelee")) 

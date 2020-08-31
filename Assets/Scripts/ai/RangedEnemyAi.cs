@@ -19,8 +19,7 @@ public class RangedEnemyAi : MonoBehaviour
     [SerializeField, Range(1.0f, 10.0f)]
     private float health = 5.0f;
 
-    [SerializeField]
-    private Transform[] partolPoints;
+    public Transform[] partolPoints;
     private int patrolDestination = 0;
 
     [SerializeField, Range(1.0f, 100.0f)]

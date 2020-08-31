@@ -18,6 +18,9 @@ public enum BossAction
 
 public class BossEnemyAi : MonoBehaviour
 {
+    [SerializeField, Range(10f, 1000f)]
+    private float health = 150f;
+
     [SerializeField]
     private Projectile projectilePrefab;
 
@@ -126,5 +129,15 @@ public class BossEnemyAi : MonoBehaviour
         p.transform.localScale = p.transform.localScale * scale;
     }
 
+
+    public void ReceiveDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        Debug.Log("boss otrzymal obrazenia. Pozostałe życie: " + health);
+    }
 
 }

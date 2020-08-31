@@ -16,6 +16,9 @@ public enum RangedEnemyState
 [RequireComponent(typeof(NavMeshAgent))]
 public class RangedEnemyAi : MonoBehaviour
 {
+    [SerializeField, Range(1.0f, 10.0f)]
+    private float health = 5.0f;
+
     [SerializeField]
     private Transform[] partolPoints;
     private int patrolDestination = 0;
@@ -245,5 +248,16 @@ public class RangedEnemyAi : MonoBehaviour
         state = RangedEnemyState.Chasing;
         agent.isStopped = false;
         isRecharging = false;
+    }
+
+
+    public void ReceiveDamage(float damage)
+    {
+        Debug.Log("Ranged otrzymal " + damage);
+        health -= damage;
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

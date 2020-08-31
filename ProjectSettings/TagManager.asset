@@ -10,6 +10,10 @@ TagManager:
   - Puddle
   - Container
   - Pond
+  - EnemyMelee
+  - EnemyRanged
+  - EnemyBoss
+  - FireProjectile
   layers:
   - Default
   - TransparentFX

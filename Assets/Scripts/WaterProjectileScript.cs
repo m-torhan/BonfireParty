@@ -39,6 +39,27 @@ public class WaterProjectileScript : MonoBehaviour
             GameObject puddle = Instantiate(puddlePrefab, new Vector3(hit.point.x, hit.point.y, hit.point.z), Quaternion.identity);
             puddle.GetComponent<PuddleScript>().volume = size * size * size;
         }
+        else if (other.gameObject.CompareTag("EnemyMelee")) 
+        {
+            Destroy(gameObject);
+            other.GetComponent<MeleeEnemyAi>().ReceiveDamage(damage);
+        }
+        else if (other.gameObject.CompareTag("EnemyRanged"))
+        {
+            Destroy(gameObject);
+            other.GetComponent<RangedEnemyAi>().ReceiveDamage(damage);
+        }
+        else if (other.gameObject.CompareTag("EnemyBoss"))
+        {
+            Destroy(gameObject);
+            other.GetComponent<BossEnemyAi>().ReceiveDamage(damage);
+        }
+        else if (other.gameObject.CompareTag("FireProjectile"))
+        {
+            Destroy(gameObject);
+            other.GetComponent<Projectile>().ReceiveDamage(damage);
+        }
+
     }
     /*
     void OnTriggerEnter(Collider other)

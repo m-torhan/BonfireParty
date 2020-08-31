@@ -119,9 +119,10 @@ GameObject:
   - component: {fileID: 874730356603819898}
   - component: {fileID: 874730356594336945}
   - component: {fileID: 874730356594336951}
+  - component: {fileID: 5267477903978472620}
   m_Layer: 0
   m_Name: Enemy melee
-  m_TagString: Untagged
+  m_TagString: EnemyMelee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -196,11 +197,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dac58bd59df92f43ac0da79e3dccab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 3
   partolPoints: []
   hearingRadius: 30
   speedWhileChasingMultiplayer: 2
   chargingDistance: 10
   explostionTriggerRange: 1.5
+--- !u!136 &5267477903978472620
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874730356594336948}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.38
+  m_Height: 4.41
+  m_Direction: 1
+  m_Center: {x: 3.96, y: 1.96, z: -0.39}
 --- !u!1 &874730356594336950
 GameObject:
   m_ObjectHideFlags: 0

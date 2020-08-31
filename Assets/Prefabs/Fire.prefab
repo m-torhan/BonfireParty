@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1897437278685504545}
   - component: {fileID: 2187555612409272753}
   m_Layer: 0
-  m_Name: FireProjectile 1
-  m_TagString: Untagged
+  m_Name: Fire
+  m_TagString: FireProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -159,6 +159,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //private void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+
+    //    if (hit.gameObject.CompareTag("FireProjectile"))
+    //    {
+    //        ReceiveDamage(hit.gameObject.GetComponent<Projectile>().Damage);
+    //        Destroy(hit.gameObject);
+    //    }
+    //}
+
     private void SwitchWeapon(int weaponSlot)
     {
         if (weapon != null)
@@ -231,6 +241,12 @@ public class PlayerMovement : MonoBehaviour
         {
             inPond = true;
         }
+
+        if (other.CompareTag("FireProjectile"))
+        {
+            ReceiveDamage(other.GetComponent<Projectile>().Damage);
+            Destroy(other.gameObject);
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -294,6 +310,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ReceiveDamage(float damage)
     {
+        Debug.Log("Player recive " + damage + " damage");
         health -= damage;
     }
 

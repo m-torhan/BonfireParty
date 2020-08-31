@@ -11,6 +11,9 @@ public enum MeleeEnemyState
 [RequireComponent(typeof(NavMeshAgent))]
 public class MeleeEnemyAi : MonoBehaviour
 {
+    [SerializeField, Range(1.0f, 10.0f)]
+    private float health = 3.0f;
+
     [SerializeField]
     private Transform[] partolPoints;
     private int patrolDestination = 0;
@@ -154,5 +157,14 @@ public class MeleeEnemyAi : MonoBehaviour
             Destroy(gameObject);
         }
         
+    }
+
+    public void ReceiveDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -317,6 +317,11 @@ public class PlayerMovement : MonoBehaviour
     public void ReceiveDamage(float damage)
     {
         health -= damage;
+
+        if(health <= 0f)
+        {
+            GameManager.Instance.LoadLoseScreen();
+        }
     }
 
     public bool GetIsRunning()

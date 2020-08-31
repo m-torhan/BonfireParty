@@ -46,12 +46,12 @@ public class BossEnemyAi : MonoBehaviour
     private float autoAttakCastTimeLeft;
     private Transform fire;
 
-    private float spawnMeleeTimeMin = 14f;
+    private float spawnMeleeTimeMin = 12f;
     private float spawnMeleeTimeMax = 22f;
     private float spawnMeleeTimeLeft = 3f;
 
-    private float spawnRangedTimeMin = 18f;
-    private float spawnRangedTimeMax = 28f;
+    private float spawnRangedTimeMin = 15f;
+    private float spawnRangedTimeMax = 25f;
     private float spawnRangedTimeLeft = 10f;
 
     [SerializeField]
@@ -209,6 +209,11 @@ public class BossEnemyAi : MonoBehaviour
             Destroy(gameObject);
         }
         Debug.Log("boss otrzymal obrazenia. Pozostałe życie: " + health);
+
+        if (health <= 0f)
+        {
+            GameManager.Instance.LoadWinScreen();
+        }
     }
 
 }

@@ -8,11 +8,10 @@ public class LoseMenu : MonoBehaviour
     
     public void LoadMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 3);
+        GameManager.Instance.LoadMainMenu();
     }
     public void QuitGame()
     {
-        Debug.Log("QUIT!");
         Application.Quit();
     }
 }

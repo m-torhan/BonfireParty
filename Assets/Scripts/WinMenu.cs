@@ -8,11 +8,10 @@ public class WinMenu : MonoBehaviour
    
     public void LoadMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        GameManager.Instance.LoadMainMenu();
     }
     public void QuitGame()
     {
-        Debug.Log("QUIT!");
         Application.Quit();
     }
 }

@@ -46,9 +46,13 @@ public class BossEnemyAi : MonoBehaviour
     private float autoAttakCastTimeLeft;
     private Transform fire;
 
-    private float noneActionTimeMin = 1f;
-    private float noneActionTimeMax = 5f;
-    private float noneActionTimeLeft = 2f;
+    private float spawnMeleeTimeMin = 14f;
+    private float spawnMeleeTimeMax = 22f;
+    private float spawnMeleeTimeLeft = 3f;
+
+    private float spawnRangedTimeMin = 18f;
+    private float spawnRangedTimeMax = 28f;
+    private float spawnRangedTimeLeft = 10f;
 
     [SerializeField]
     private MeleeEnemyAi meleeEnemyPrefab;
@@ -94,7 +98,8 @@ public class BossEnemyAi : MonoBehaviour
                 state = BossState.Idle;
 
             UpdateBossAction1();
-            UpdateBossAction2();
+            UpdateSpawnMeleeEnemies();
+            UpdateSpawnRangedEnemies();
         }
     }
 
@@ -126,36 +131,44 @@ public class BossEnemyAi : MonoBehaviour
     }
 
 
-    private void UpdateBossAction2()
+    private void UpdateSpawnMeleeEnemies()
     {
-        if(action2 == BossAction.None)
+        spawnMeleeTimeLeft -= Time.deltaTime;
+        if (spawnMeleeTimeLeft <= 0f)
         {
-            noneActionTimeLeft -= Time.deltaTime;
-            if (noneActionTimeLeft <= 0f)
-                action2 = BossAction.Spawn;
-        }
-        else if(action2 == BossAction.Spawn)
-        {
-            SpawnEnemies();
-            action2 = BossAction.None;
-            noneActionTimeLeft = Random.Range(noneActionTimeMin, noneActionTimeMax);
+            SpawnMeleeEnemy(meleeEnemyPath1);
+            SpawnMeleeEnemy(meleeEnemyPath2);
+            spawnMeleeTimeLeft = Random.Range(spawnMeleeTimeMin, spawnMeleeTimeMax);
         }
     }
 
-    private void SpawnEnemies()
+    private void UpdateSpawnRangedEnemies()
     {
-        int random = Random.Range(0, 3);
-
-        switch (random)
+        spawnRangedTimeLeft -= Time.deltaTime;
+        if (spawnRangedTimeLeft <= 0f)
         {
-            case 0:
-                MeleeEnemyAi m =  Instantiate(meleeEnemyPrefab).GetComponent<MeleeEnemyAi>();
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
+            SpawnRangedEnemy(rangedEnemyPath1);
+            SpawnRangedEnemy(rangedEnemyPath2);
+            spawnRangedTimeLeft = Random.Range(spawnRangedTimeMin, spawnRangedTimeMax);
         }
+    }
+
+    private void SpawnMeleeEnemy(Transform[] patrolPoints)
+    {
+        MeleeEnemyAi m = Instantiate(meleeEnemyPrefab).GetComponent<MeleeEnemyAi>();
+        m.gameObject.SetActive(false);
+        m.partolPoints = patrolPoints;
+        m.transform.position = patrolPoints[0].position;
+        m.gameObject.SetActive(true);
+    }
+
+    private void SpawnRangedEnemy(Transform[] patrolPoints)
+    {
+        RangedEnemyAi m = Instantiate(rangedEnemyPrefab).GetComponent<RangedEnemyAi>();
+        m.gameObject.SetActive(false);
+        m.partolPoints = patrolPoints;
+        m.transform.position = patrolPoints[0].position;
+        m.gameObject.SetActive(true);
     }
 
     private bool AutoAttack(Transform fire)
@@ -165,7 +178,7 @@ public class BossEnemyAi : MonoBehaviour
             Projectile p = fire.gameObject.AddComponent<Projectile>();
             Vector3 pp = player.position;
             pp.y -= 4f;
-            p.Setup(fire.position, pp, 0.5f);
+            p.Setup(fire.position, pp, 0.5f, damage: 15f);
             return true;
         }
 

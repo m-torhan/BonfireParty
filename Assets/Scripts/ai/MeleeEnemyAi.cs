@@ -148,9 +148,6 @@ public class MeleeEnemyAi : MonoBehaviour
 
         if (playerInLineOfSight && agent.remainingDistance < chargingDistance)
         {
-            // TODO: skomplikować movement troche bardziej
-            // jeżeli jesteśmy odpowiednio blisko, ale nie w line of sight to mozna sprawdzic dodatkowo
-            //  czy jeżeli przesuniemy się trochę w prawo / lewo to czy będzie line of sight 
             state = MeleeEnemyState.Charge;
         }
     }

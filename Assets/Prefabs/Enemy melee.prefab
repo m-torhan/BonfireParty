@@ -134,16 +134,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874730356594336948}
-  m_LocalRotation: {x: -0, y: 0.49685457, z: -0, w: 0.8678338}
-  m_LocalPosition: {x: 119.07839, y: -18.892006, z: -20.911238}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 874730356594047130}
   - {fileID: 6223754573365685134}
   - {fileID: 5857100607942014175}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 59.584003, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &874730356603819898
 Animator:
   serializedVersion: 3
@@ -172,7 +172,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 874730356594336948}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.86
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -181,7 +181,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 2.5
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

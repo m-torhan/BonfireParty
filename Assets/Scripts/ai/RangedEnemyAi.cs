@@ -13,7 +13,6 @@ public enum RangedEnemyState
     Recharging
 }
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class RangedEnemyAi : MonoBehaviour
 {
     [SerializeField, Range(1.0f, 10.0f)]
@@ -219,8 +218,11 @@ public class RangedEnemyAi : MonoBehaviour
 
     private void UpdateCasting()
     {
-        // TODO: jakas animacja?
         agent.isStopped = true;
+
+        Vector3 lookPos = player.position - transform.position;
+        lookPos.y = 0f;
+        transform.rotation = Quaternion.LookRotation(lookPos, Vector3.up);
         if (!isCasting)
         {
             StartCoroutine(StartCasting());
@@ -237,6 +239,9 @@ public class RangedEnemyAi : MonoBehaviour
 
     private void UpdateRecharging()
     {
+        Vector3 lookPos = player.position - transform.position;
+        lookPos.y = 0f;
+        transform.rotation = Quaternion.LookRotation(lookPos);
         if (!isRecharging)
         {
             StartCoroutine(StartRecharging());

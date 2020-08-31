@@ -11,8 +11,8 @@ public enum BossState
 public enum BossAction
 {
     Spawn,
-    Attack1,
-    Attack1Cast
+    AutoAttack,
+    AutoAttackCast
 }
 
 
@@ -31,12 +31,14 @@ public class BossEnemyAi : MonoBehaviour
     private Transform rightHand;
 
     private BossState state = BossState.Init;
-    private BossAction action = BossAction.Attack1;
+    private BossAction action = BossAction.AutoAttack;
     private Transform player;
     private float fightRange = 60.0f;
 
-    private float castTime = 3f;
-    private float castTimeLeft;
+    [SerializeField, Range(0.5f, 3f)]
+    private float autoAttackCastTime = 2f;
+
+    private float autoAttakCastTimeLeft;
     private Transform fire;
 
     private void OnDrawGizmos()
@@ -72,21 +74,21 @@ public class BossEnemyAi : MonoBehaviour
     {
         transform.rotation = Quaternion.LookRotation(player.position - transform.position) * Quaternion.Euler(0f, -80f, 0f);
         
-        if(action == BossAction.Attack1)
+        if(action == BossAction.AutoAttack)
         {
-            castTimeLeft = 3f;
+            autoAttakCastTimeLeft = 3f;
             //FireProjectile(leftHand.position, player.position, 1f, 7f);
             fire = Instantiate(firePrefab);
             fire.position = leftHand.position;
-            Attack1(fire);
+            AutoAttack(fire);
 
-            action = BossAction.Attack1Cast;
+            action = BossAction.AutoAttackCast;
         }
-        else if(action == BossAction.Attack1Cast)
+        else if(action == BossAction.AutoAttackCast)
         {
-            if (Attack1(fire))
+            if (AutoAttack(fire))
             {
-                action = BossAction.Attack1;
+                action = BossAction.AutoAttack;
             }
         }
         //else if (action == BossAction.Attack2)
@@ -95,11 +97,9 @@ public class BossEnemyAi : MonoBehaviour
         //}
     }
 
-    private bool Attack1(Transform fire)
+    private bool AutoAttack(Transform fire)
     {
-        float size = 7f;
-
-        if (castTimeLeft <= 0f)
+        if (autoAttakCastTimeLeft <= 0f)
         {
             Projectile p = fire.gameObject.AddComponent<Projectile>();
             Vector3 pp = player.position;
@@ -108,13 +108,13 @@ public class BossEnemyAi : MonoBehaviour
             return true;
         }
 
-        fire.localScale = (new Vector3(20f, 20f, 20f) * 7f * (castTime - castTimeLeft)/castTime);
+        fire.localScale = (new Vector3(20f, 20f, 20f) * 5f * (autoAttackCastTime - autoAttakCastTimeLeft)/autoAttackCastTime);
 
         Vector3 pos = leftHand.position;
-        pos.y -= 5 *(castTime - castTimeLeft) / castTime;
+        pos.y -= 3 *(autoAttackCastTime - autoAttakCastTimeLeft) / autoAttackCastTime;
         fire.position = pos;
 
-        castTimeLeft -= Time.deltaTime;
+        autoAttakCastTimeLeft -= Time.deltaTime;
         return false;
     }
 

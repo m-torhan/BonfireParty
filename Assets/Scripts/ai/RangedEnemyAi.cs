@@ -15,7 +15,7 @@ public enum RangedEnemyState
 
 public class RangedEnemyAi : MonoBehaviour
 {
-    [SerializeField, Range(1.0f, 10.0f)]
+    [SerializeField, Range(1.0f, 15.0f)]
     private float health = 5.0f;
 
     public Transform[] partolPoints;

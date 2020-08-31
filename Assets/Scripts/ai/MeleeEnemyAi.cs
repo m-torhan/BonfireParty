@@ -5,7 +5,8 @@ public enum MeleeEnemyState
 {
     Patrolling,
     Chasing,
-    Charge
+    Charge,
+    Dead
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -29,10 +30,20 @@ public class MeleeEnemyAi : MonoBehaviour
     private float chargingDistance = 10.0f;  // how close enemy needs to be to start charging at player, certenly this number should be smaller than hearing Radius
 
     [SerializeField, Range(0.0f, 3.0f)]
-    private float explostionTriggerRange = 1.5f;  // how close will enemy charge toi player before explosion
+    private float explostionTriggerRange = 2f;  // how close will enemy charge toi player before explosion
 
-    //[SerializeField, Range(1.0f, 5.0f)]
-    //private float explostionRange = 3.0f;  // explosion radius, should be bigger than explosionTriggerRange
+    [SerializeField, Range(1.0f, 5.0f)]
+    private float explostionRange = 3.0f;  
+
+    [SerializeField, Range(1.0f, 20.0f)]
+    private float explosionDamage = 10.0f;  
+
+    [SerializeField]
+    private ParticleSystem explosion;
+
+    [SerializeField]
+    private GameObject visuals;
+
 
     bool playerInLineOfSight = false; // this is only updated in chasing state, it is member variable only to use is to draw gizmos for visualization
     private Vector3? explostionPosition = null;
@@ -89,6 +100,12 @@ public class MeleeEnemyAi : MonoBehaviour
             UpdateChasing();
         else if (state == MeleeEnemyState.Charge)
             UpdateCharging();
+        else if(state == MeleeEnemyState.Dead)
+        {
+            if (!explosion.isEmitting)
+                Destroy(gameObject);
+        }
+
     }
 
 
@@ -143,7 +160,6 @@ public class MeleeEnemyAi : MonoBehaviour
 
     private void UpdateCharging()
     {
-        // TODO: zostawia trail za soba podczas szarży?
         if (explostionPosition == null)
         {
             explostionPosition = player.position;
@@ -152,9 +168,19 @@ public class MeleeEnemyAi : MonoBehaviour
 
         if (agent.remainingDistance < explostionTriggerRange)
         {
-            // Animacja eksplozji trwajaca chwile, po tym czasie zadaj obrazenia wszystkim trafionym
-            //Debug.Log("BUM");
-            Destroy(gameObject);
+            explosion.gameObject.SetActive(true);
+            explosion.Play();
+
+            Collider[] colliders = Physics.OverlapSphere(transform.position, explostionRange, Ai.playerLayerMask);
+            if(colliders.Length > 0)
+            {
+                colliders[0].GetComponent<PlayerMovement>().ReceiveDamage(explosionDamage);
+            }
+
+            state = MeleeEnemyState.Dead;
+            Destroy(gameObject.GetComponent<CapsuleCollider>());
+            Destroy(gameObject.GetComponent<NavMeshAgent>());
+            Destroy(visuals);
         }
         
     }

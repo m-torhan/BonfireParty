@@ -144,7 +144,18 @@ public class BossEnemyAi : MonoBehaviour
 
     private void SpawnEnemies()
     {
+        int random = Random.Range(0, 3);
 
+        switch (random)
+        {
+            case 0:
+                MeleeEnemyAi m =  Instantiate(meleeEnemyPrefab).GetComponent<MeleeEnemyAi>();
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
     }
 
     private bool AutoAttack(Transform fire)

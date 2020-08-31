@@ -203,6 +203,8 @@ MonoBehaviour:
   speedWhileChasingMultiplayer: 2
   chargingDistance: 10
   explostionTriggerRange: 1.5
+  explostionRange: 3
+  explosionDamage: 10
   explosion: {fileID: 3825514169763866366}
   visuals: {fileID: 8718541942393909233}
 --- !u!136 &5267477903978472620

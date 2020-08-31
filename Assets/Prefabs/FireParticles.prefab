@@ -9406,7 +9406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 51929259109656243}
   - component: {fileID: 2061463112583735453}
-  - component: {fileID: 1421220237110754788}
+  - component: {fileID: 5004453945868991327}
   m_Layer: 9
   m_Name: FireParticles
   m_TagString: Fire
@@ -9445,7 +9445,7 @@ CapsuleCollider:
   m_Height: 0.07
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1421220237110754788
+--- !u!114 &5004453945868991327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9454,7 +9454,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 51929259109656242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff9e2c9f6941591439015780010f482c, type: 3}
+  m_Script: {fileID: 11500000, guid: f4d1752349705cf44baabeb2d4cb23fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   redFire: {fileID: 51929258675064187}

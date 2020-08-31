@@ -12,7 +12,8 @@ public enum BossAction
 {
     Spawn,
     AutoAttack,
-    AutoAttackCast
+    AutoAttackCast,
+    None
 }
 
 
@@ -30,11 +31,12 @@ public class BossEnemyAi : MonoBehaviour
     [SerializeField]
     private Transform leftHand;
     [SerializeField]
-
     private Transform rightHand;
 
     private BossState state = BossState.Init;
-    private BossAction action = BossAction.AutoAttack;
+    private BossAction action1 = BossAction.AutoAttack;
+    private BossAction action2 = BossAction.None;
+
     private Transform player;
     private float fightRange = 60.0f;
 
@@ -43,6 +45,29 @@ public class BossEnemyAi : MonoBehaviour
 
     private float autoAttakCastTimeLeft;
     private Transform fire;
+
+    private float noneActionTimeMin = 1f;
+    private float noneActionTimeMax = 5f;
+    private float noneActionTimeLeft = 2f;
+
+    [SerializeField]
+    private MeleeEnemyAi meleeEnemyPrefab;
+
+    [SerializeField]
+    private Transform[] meleeEnemyPath1;
+
+    [SerializeField]
+    private Transform[] meleeEnemyPath2;
+
+
+    [SerializeField]
+    private RangedEnemyAi rangedEnemyPrefab;
+
+    [SerializeField]
+    private Transform[] rangedEnemyPath1;
+
+    [SerializeField]
+    private Transform[] rangedEnemyPath2;
 
     private void OnDrawGizmos()
     {
@@ -68,15 +93,16 @@ public class BossEnemyAi : MonoBehaviour
             if (Vector3.Distance(player.position, transform.position) > fightRange)
                 state = BossState.Idle;
 
-            UpdateFight();
+            UpdateBossAction1();
+            UpdateBossAction2();
         }
     }
 
-    private void UpdateFight()
+    private void UpdateBossAction1()
     {
         transform.rotation = Quaternion.LookRotation(player.position - transform.position) * Quaternion.Euler(0f, -80f, 0f);
         
-        if(action == BossAction.AutoAttack)
+        if(action1 == BossAction.AutoAttack)
         {
             autoAttakCastTimeLeft = 3f;
             //FireProjectile(leftHand.position, player.position, 1f, 7f);
@@ -84,19 +110,41 @@ public class BossEnemyAi : MonoBehaviour
             fire.position = leftHand.position;
             AutoAttack(fire);
 
-            action = BossAction.AutoAttackCast;
+            action1 = BossAction.AutoAttackCast;
         }
-        else if(action == BossAction.AutoAttackCast)
+        else if(action1 == BossAction.AutoAttackCast)
         {
             if (AutoAttack(fire))
             {
-                action = BossAction.AutoAttack;
+                action1 = BossAction.AutoAttack;
             }
         }
         //else if (action == BossAction.Attack2)
         //{
         //    action = BossAction.Attack1;
         //}
+    }
+
+
+    private void UpdateBossAction2()
+    {
+        if(action2 == BossAction.None)
+        {
+            noneActionTimeLeft -= Time.deltaTime;
+            if (noneActionTimeLeft <= 0f)
+                action2 = BossAction.Spawn;
+        }
+        else if(action2 == BossAction.Spawn)
+        {
+            SpawnEnemies();
+            action2 = BossAction.None;
+            noneActionTimeLeft = Random.Range(noneActionTimeMin, noneActionTimeMax);
+        }
+    }
+
+    private void SpawnEnemies()
+    {
+
     }
 
     private bool AutoAttack(Transform fire)

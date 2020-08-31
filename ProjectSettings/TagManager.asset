@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Water
+  - WaterProjectile
+  - Ground
+  - Puddle
+  - Container
+  - Pond
+  - EnemyMelee
+  - EnemyRanged
+  - EnemyBoss
+  - FireProjectile
   layers:
   - Default
   - TransparentFX
@@ -14,8 +24,8 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
+  - Ground
+  - player
   - 
   - 
   - 

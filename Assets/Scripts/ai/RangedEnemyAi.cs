@@ -145,7 +145,7 @@ public class RangedEnemyAi : MonoBehaviour
         agent.destination = player.position;
 
         eyePos = transform.position;
-        eyePos.y += 2.0f;
+        eyePos.y += 4.0f * transform.localScale.x;
         float currentDistance = Vector3.Distance(eyePos, player.position);
         if (currentDistance < castDistance)
         {

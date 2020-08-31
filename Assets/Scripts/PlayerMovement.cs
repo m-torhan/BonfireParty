@@ -310,7 +310,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void ReceiveDamage(float damage)
     {
-        Debug.Log("Player recive " + damage + " damage");
         health -= damage;
     }
 

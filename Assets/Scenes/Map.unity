@@ -14530,7 +14530,7 @@ PrefabInstance:
     - target: {fileID: 5841048026281993859, guid: 63999a836d7b2f440833a2de6a77dec0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -19.3
+      value: -20.83
       objectReference: {fileID: 0}
     - target: {fileID: 5841048026281993859, guid: 63999a836d7b2f440833a2de6a77dec0,
         type: 3}
@@ -14577,6 +14577,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5841048026281993859, guid: 63999a836d7b2f440833a2de6a77dec0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841048026281993859, guid: 63999a836d7b2f440833a2de6a77dec0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841048026281993859, guid: 63999a836d7b2f440833a2de6a77dec0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5841048027962834688, guid: 63999a836d7b2f440833a2de6a77dec0,
         type: 3}
       propertyPath: partolPoints.Array.size
@@ -14597,6 +14612,17 @@ PrefabInstance:
       propertyPath: partolPoints.Array.data[2]
       value: 
       objectReference: {fileID: 898014702}
+    - target: {fileID: 5841048027962834688, guid: 63999a836d7b2f440833a2de6a77dec0,
+        type: 3}
+      propertyPath: weaponDrop
+      value: 
+      objectReference: {fileID: 2531301270909288708, guid: e66744535a92ee64d9d6e8b9d083a3a4,
+        type: 3}
+    - target: {fileID: 5841048027962834688, guid: 63999a836d7b2f440833a2de6a77dec0,
+        type: 3}
+      propertyPath: health
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63999a836d7b2f440833a2de6a77dec0, type: 3}
 --- !u!4 &1058151511 stripped
@@ -26841,6 +26867,11 @@ PrefabInstance:
       propertyPath: hiddenSpot
       value: 
       objectReference: {fileID: 935390519}
+    - target: {fileID: 3358556154241938141, guid: cec5082ca05af2a48b10936db6a15c4f,
+        type: 3}
+      propertyPath: weaponSlots.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3358556154120720125, guid: cec5082ca05af2a48b10936db6a15c4f,
         type: 3}
       propertyPath: m_Layer

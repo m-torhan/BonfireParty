@@ -9,7 +9,6 @@ public enum MeleeEnemyState
     Dead
 }
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class MeleeEnemyAi : MonoBehaviour
 {
     [SerializeField, Range(1.0f, 10.0f)]
@@ -115,7 +114,6 @@ public class MeleeEnemyAi : MonoBehaviour
         {
             state = MeleeEnemyState.Chasing;
             Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRadius, Ai.playerLayerMask);
-            Debug.Assert(colliders.Length == 1, "Collider count doesn't match. Either there is more than one player or there is none.");
             player = colliders[0].gameObject.transform;
 
         }

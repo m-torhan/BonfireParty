@@ -38,6 +38,11 @@ public class RangedEnemyAi : MonoBehaviour
     [SerializeField, Range(0.0f, 10.0f)]
     private float rechargeTime = 3.0f;  // how long is rechargning
 
+    [SerializeField]
+    private GameObject weaponContainerPrefab;
+
+    [SerializeField]
+    private GameObject weaponDrop;
 
 
     private bool playerInLineOfSight;
@@ -116,7 +121,6 @@ public class RangedEnemyAi : MonoBehaviour
         {
             state = RangedEnemyState.Chasing;
             Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRadius, Ai.playerLayerMask);
-            Debug.Assert(colliders.Length == 1, "Collider count doesn't match. Either there is more than one player or there is none.");
             player = colliders[0].gameObject.transform;
 
         }
@@ -253,11 +257,34 @@ public class RangedEnemyAi : MonoBehaviour
 
     public void ReceiveDamage(float damage)
     {
-        Debug.Log("Ranged otrzymal " + damage);
         health -= damage;
         if(health <= 0)
         {
+            DropWeapon();
             Destroy(gameObject);
+        }
+    }
+
+    private void DropWeapon()
+    {
+        if(weaponDrop != null)
+        {
+            GameObject weaponContainer = Instantiate(weaponContainerPrefab);
+
+            Vector3 p = transform.position;
+            p.y += 3f;
+            weaponContainer.transform.position = p;
+
+            weaponContainer.transform.parent = null;
+            //weaponContainer.GetComponent<WeaponContainerScript>().velocity = transform.forward * 10f;
+
+            GameObject weapon = Instantiate(weaponDrop);
+
+            weaponContainer.GetComponent<WeaponContainerScript>().weapon = weapon;
+            weapon.transform.parent = weaponContainer.transform;
+            weapon.transform.localPosition = Vector3.zero;
+            weapon.transform.localRotation = Quaternion.identity;
+
         }
     }
 }

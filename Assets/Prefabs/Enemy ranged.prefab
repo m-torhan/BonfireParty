@@ -153,6 +153,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1944458761958907760, guid: 7c57b2f6db705734f9c307008ab6c04e,
     type: 3}
   rechargeTime: 3
+  weaponContainerPrefab: {fileID: 1068364464955122783, guid: 6c173ae73818ae344aaef84fa54aa0b5,
+    type: 3}
+  weaponDrop: {fileID: 0}
 --- !u!195 &5841048027962834689
 NavMeshAgent:
   m_ObjectHideFlags: 0

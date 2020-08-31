@@ -49,26 +49,19 @@ public class Projectile : MonoBehaviour
         //}
         if (t >= 1.0f)
         {
-            Debug.Log("samozniszenie (niczego nie trafil)");
             Destroy(gameObject);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Trigger. Tag: " + other.tag);
-       // Destroy(gameObject);
+        Destroy(gameObject);
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log("Collision. Tag: " + collision.other.gameObject.tag);
-    //    //Destroy(gameObject);
-    //}
+
 
     public void ReceiveDamage(float damage)
     {
-        Debug.Log("Projectile dmg, health: " + health);
         health -= damage;
         if (health <= 0f)
             Destroy(gameObject);

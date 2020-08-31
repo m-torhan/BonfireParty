@@ -54,7 +54,6 @@ public class BossEnemyAi : MonoBehaviour
         if(state == BossState.Init)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 500.0f, Ai.playerLayerMask);
-            Debug.Assert(colliders.Length == 1, "Collider count doesn't match. Either there is more than one player or there is none.");
             player = colliders[0].gameObject.transform;
 
             state = BossState.Idle;

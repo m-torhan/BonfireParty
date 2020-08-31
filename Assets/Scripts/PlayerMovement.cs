@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private float health = 100f;
+
     public float speed = 10f;
     public float gravity = -9.81f;
     public float jumpHeight = 2f;
@@ -251,5 +254,51 @@ public class PlayerMovement : MonoBehaviour
         float ret = ammo >= amount ? amount : ammo;
         ammo -= ret;
         return ret;
+    }
+
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    public float GetAmmo()
+    {
+        return ammo;
+    }
+
+    public float GetMagazineAmmo()
+    {
+        return weapon.GetComponent<WeaponScript>().GetMagazineAmmo();
+    }
+    public float GetReloadTime()
+    {
+        return weapon.GetComponent<WeaponScript>().GetReloadTime();
+    }
+
+    public Sprite GetWeaponSlotIcon(int slot)
+    {
+        if (weaponSlots[slot] == null)
+        {
+            return null;
+        }
+        else
+        {
+            return weaponSlots[slot].GetComponent<WeaponScript>().weaponIcon;
+        }
+    }
+
+    public int GetActiveWeaponSlot()
+    {
+        return activeWeaponSlot;
+    }
+
+    public void ReceiveDamage(float damage)
+    {
+        health -= damage;
+    }
+
+    public bool GetIsRunning()
+    {
+        return isRunning;
     }
 }

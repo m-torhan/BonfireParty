@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1b220eeed13c6a45b7c4c5370aca73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponIcon: {fileID: 21300000, guid: 8d27f75125dbdb44db39c7a633e7c2d6, type: 3}
   weaponProperties:
-    drawTime: 4
+    drawTime: 1
     reloadTime: 3
     rateOfFire: 0.1
     damageAvg: 1
@@ -94,10 +95,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2531301270909288709}
     m_Modifications:
-    - target: {fileID: 100000, guid: 423e5b8f238ce4d4a8c224a8839d126d, type: 3}
-      propertyPath: m_Name
-      value: gun3
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 423e5b8f238ce4d4a8c224a8839d126d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -141,6 +138,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 423e5b8f238ce4d4a8c224a8839d126d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 423e5b8f238ce4d4a8c224a8839d126d, type: 3}
+      propertyPath: m_Name
+      value: gun3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 423e5b8f238ce4d4a8c224a8839d126d, type: 3}

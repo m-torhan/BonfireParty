@@ -145,6 +145,12 @@ public class PlayerMovement : MonoBehaviour
             LoadAmmo();
         }
 
+        // health regen
+        if (inPond && health < 100.0f)
+        {
+            health += Time.deltaTime * 10.0f;
+        }
+
         // weapon switch
         if (Input.GetKeyDown(KeyCode.Alpha1) && weaponSlots[0] != null && activeWeaponSlot != 0) {
             SwitchWeapon(0);
@@ -245,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (inPond && ammo < maxAmmo)
         {
-            ammo += Time.deltaTime * 10.0f;
+            ammo += Time.deltaTime * 16.0f;
         }
     }
 

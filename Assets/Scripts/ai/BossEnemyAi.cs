@@ -1,5 +1,6 @@
-﻿using System.Collections;
+﻿using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 public enum BossState
 {
@@ -20,6 +21,7 @@ public enum BossAction
 public class BossEnemyAi : MonoBehaviour
 {
     [SerializeField, Range(10f, 1000f)]
+    private float maxHealth = 150f;
     private float health = 150f;
 
     [SerializeField]
@@ -73,9 +75,26 @@ public class BossEnemyAi : MonoBehaviour
     [SerializeField]
     private Transform[] rangedEnemyPath2;
 
+    [SerializeField]
+    private GameObject healthBar;
+
+    [SerializeField]
+    private GameObject healthBarBackground;
+
+    private UnityEngine.UI.Image healhBarImage;
+
+    private void Start()
+    {
+        healhBarImage = healthBar.GetComponent<UnityEngine.UI.Image>();
+        healhBarImage.fillAmount = 1f;
+        healhBarImage.gameObject.SetActive(false);
+        healthBarBackground.SetActive(false);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, fightRange);
+
     }
 
     private void Update()
@@ -89,11 +108,17 @@ public class BossEnemyAi : MonoBehaviour
         }
         if(state == BossState.Idle)
         {
+            healhBarImage.gameObject.SetActive(false);
+            healthBarBackground.SetActive(false);
+            health = maxHealth; // make sure to heal if player runs away
             if (Vector3.Distance(player.position, transform.position) <= fightRange)
                 state = BossState.Fight;
         }
         else if(state == BossState.Fight)
         {
+            healhBarImage.gameObject.SetActive(true);
+            healthBarBackground.SetActive(true);
+            healhBarImage.fillAmount = 1 - (maxHealth - health) / maxHealth;
             if (Vector3.Distance(player.position, transform.position) > fightRange)
                 state = BossState.Idle;
 
